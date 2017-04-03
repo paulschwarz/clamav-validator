@@ -1,9 +1,9 @@
 <?php namespace Sunspikes\ClamavValidator;
 
-use Illuminate\Validation\Validator;
-use Quahog\Client;
+use Illuminate\Support\Facades\Validator;
 use Socket\Raw\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Xenolope\Quahog\Client;
 
 class ClamavValidator extends Validator
 {
@@ -29,6 +29,10 @@ class ClamavValidator extends Validator
 
     /**
      * Creates a new instance of ClamavValidator
+     * @param $translator
+     * @param $data
+     * @param $rules
+     * @param $messages
      */
     public function __construct($translator, $data, $rules, $messages)
     {
@@ -41,7 +45,8 @@ class ClamavValidator extends Validator
      * @param  $attribute  string
      * @param  $value       mixed
      * @param  $parameters array
-     * @return boolean
+     * @return bool
+     * @throws ClamavValidatorException
      */
     public function validateClamav($attribute, $value, $parameters)
     {
