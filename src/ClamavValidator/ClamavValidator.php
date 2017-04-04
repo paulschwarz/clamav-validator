@@ -1,6 +1,6 @@
 <?php namespace Sunspikes\ClamavValidator;
 
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Validator;
 use Socket\Raw\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Xenolope\Quahog\Client;
