@@ -15,9 +15,15 @@
             "email": "sunspikes@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ppawlas/quahog.git"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
-        "xenolope/quahog": "2.*",
+        "xenolope/quahog": "dev-binary",
         "illuminate/support": ">=4.2",
         "illuminate/validation": ">=4.1.21"
     },
