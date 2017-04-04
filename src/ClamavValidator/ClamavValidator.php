@@ -57,7 +57,7 @@ class ClamavValidator extends Validator
         $socket = (new Factory())->createClient($clamavSocket);
 
         // Create a new instance of the Client
-        $quahog = new Client($socket, 30, PHP_NORMAL_READ);
+        $quahog = new Client($socket);
 
         // Scan the file
         $result = $quahog->scanFile($file);
