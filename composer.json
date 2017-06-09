@@ -1,5 +1,5 @@
 {
-    "name": "sunspikes/clamav-validator",
+    "name": "digitalideastudio/clamav-validator",
     "description": "Custom Laravel 5 anti-virus validator for file uploads.",
     "keywords": [
         "laravel",
@@ -7,7 +7,7 @@
         "clamav",
         "virus"
     ],
-    "homepage": "https://github.com/sunspikes/clamav-validator",
+    "homepage": "https://github.com/digitalideastudio/clamav-validator",
     "license": "MIT",
     "authors": [
         {
