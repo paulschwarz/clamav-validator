@@ -43,7 +43,7 @@ This package is not tested on windows, but if you have ClamAV running (usually o
 
 Install the package through [Composer](http://getcomposer.org).
 
-Run `composer require sunspikes/clamav-validator`
+Run `composer require digitalideastudio/clamav-validator`
 
 Add the following to your `providers` array in `config/app.php`:
 

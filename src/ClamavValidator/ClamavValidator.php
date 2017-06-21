@@ -1,7 +1,7 @@
 <?php namespace Sunspikes\ClamavValidator;
 
 use Illuminate\Validation\Validator;
-use Quahog\Client;
+use Xenolope\Quahog\Client;
 use Socket\Raw\Factory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -46,16 +46,30 @@ class ClamavValidator extends Validator
     public function validateClamav($attribute, $value, $parameters)
     {
         $file = $this->getFilePath($value);
+
         $clamavSocket = $this->getClamavSocket();
 
-        // Create a new socket instance
-        $socket = (new Factory())->createClient($clamavSocket);
+        try {
+            $socket = (new Factory())->createClient($clamavSocket);
+        } catch (\Exception $e) {
+            throw new Exception('Unable to initiate a virus check.');
+        }
 
         // Create a new instance of the Client
-        $quahog = new Client($socket);
+        $quahog = new Client($socket, 30, PHP_NORMAL_READ);
 
+        // Ensure that clamav user is able to read the file
+        $oldPerms = fileperms($file);
+        chmod($file, 0666);
+        clearstatcache(true, $file);
+        
         // Scan the file
         $result = $quahog->scanFile($file);
+        
+        // Restore permissions
+        chmod($file, $oldPerms);
+        clearstatcache(true, $file);
+        
 
         if (self::CLAMAV_STATUS_ERROR === $result['status']) {
             throw new ClamavValidatorException($result['reason']);
