@@ -46,6 +46,7 @@ class ClamavValidator extends Validator
     public function validateClamav($attribute, $value, $parameters)
     {
         $file = $this->getFilePath($value);
+
         $clamavSocket = $this->getClamavSocket();
 
         try {
@@ -57,8 +58,18 @@ class ClamavValidator extends Validator
         // Create a new instance of the Client
         $quahog = new Client($socket, 30, PHP_NORMAL_READ);
 
+        // Ensure that clamav user is able to read the file
+        $oldPerms = fileperms($file);
+        chmod($file, 0666);
+        clearstatcache(true, $file);
+        
         // Scan the file
         $result = $quahog->scanFile($file);
+        
+        // Restore permissions
+        chmod($file, $oldPerms);
+        clearstatcache(true, $file);
+        
 
         if (self::CLAMAV_STATUS_ERROR === $result['status']) {
             throw new ClamavValidatorException($result['reason']);
